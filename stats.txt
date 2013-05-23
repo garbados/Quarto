@@ -1,0 +1,14 @@
+Algo4 VS Algo4
+
+p1_wins: 475
+p2_wins: 504
+stalemates: 21
+0:00:01.697397
+
+
+Algo3 VS Algo4
+
+p1_wins: 584
+p2_wins: 398
+stalemates: 18
+0:00:14.206989
