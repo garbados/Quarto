@@ -1,13 +1,10 @@
 import copy
 import datetime
-from algos import Player,Algo4,Algo3,Algo5,Algo6
+from algos import Player,Algo4,Algo3,Algo5,Algo6,Algo7,Algo8,Algo9,Algo10
 from board import Move,Board
 
- 
-
-if __name__=="__main__":
-    tic = datetime.datetime.now()
-    num_games = 1000
+def drive():
+    num_games = 50
     
     player_1 = "a"
     player_2 = "b"
@@ -18,8 +15,8 @@ if __name__=="__main__":
     for j in range(num_games):
         board = Board()
 
-        player_a = Algo6(player_1)
-        player_b = Algo4(player_2)
+        player_a = Algo10(player_1)
+        player_b = Algo7(player_2)
         
         current_player = player_a
         i = 0
@@ -45,8 +42,13 @@ if __name__=="__main__":
         else:
             stalemates += 1
             
-    print "p1_wins:",player_1_wins
-    print "p2_wins:",player_2_wins
+    print player_a,"_wins:",player_1_wins
+    print player_b,"_wins:",player_2_wins
     print "stalemates:",stalemates
+
+
+if __name__=="__main__":
+    tic = datetime.datetime.now()
+    drive()
     toc = datetime.datetime.now()
     print toc-tic

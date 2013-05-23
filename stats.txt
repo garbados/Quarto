@@ -1,14 +1,59 @@
-Algo4 VS Algo4
+Algo10a _wins: 428
+Algo7b _wins: 72
+stalemates: 0
+0:02:03.666089
 
-p1_wins: 475
-p2_wins: 504
-stalemates: 21
-0:00:01.697397
+Algo9a _wins: 426
+Algo7b _wins: 74
+stalemates: 0
+0:03:04.219390
 
+Algo8a _wins: 400
+Algo7b _wins: 100
+stalemates: 0
+0:01:00.191167
 
-Algo3 VS Algo4
+Algo8a _wins: 456
+Algo4b _wins: 43
+stalemates: 1
+0:00:22.714374
 
-p1_wins: 584
-p2_wins: 398
-stalemates: 18
-0:00:14.206989
+Algo8a _wins: 488
+Algo3b _wins: 12
+stalemates: 0
+0:00:24.223935
+
+Algo7a _wins: 2753
+Algo5b _wins: 2225
+stalemates: 22
+0:00:32.327643
+
+Algo7a _wins: 4102
+Algo3b _wins: 810
+stalemates: 88
+0:00:34.647291
+
+Algo7a _wins: 3674
+Algo4b _wins: 1313
+stalemates: 13
+0:00:16.194952
+
+Algo5a _wins: 3609
+Algo3b _wins: 1206
+stalemates: 185
+0:00:67.336
+
+Algo5a _wins: 3448
+Algo4b _wins: 1511
+stalemates: 41
+0:00:30.657
+
+Algo6a _wins: 3544
+Algo3b _wins: 1239
+stalemates: 217
+0:00:38.302250
+
+Algo6a _wins: 3353
+Algo4b _wins: 1604
+stalemates: 43
+0:00:17.139857
