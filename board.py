@@ -33,7 +33,17 @@ class Board():
         self.in_play = [-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1]
         self.next_piece = -1
         self.pieces_available = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-             
+
+    def four_match(self,a,b,c,d):
+        total = 15
+        if(a<0 or b<0 or c<0 or d<0):
+            return False
+        a_opp = total-a
+        b_opp = total-b
+        c_opp = total-c
+        d_opp = total-d
+        return ((a & b & c & d) > 0 or (a_opp & b_opp & c_opp & d_opp) > 0)
+                      
     def __deepcopy__(self,memo):
         result = Board()
         result.in_play = self.in_play[::]
@@ -66,80 +76,21 @@ class Board():
         return False
     
     def game_over(self):
-        #if(self.is_winning_arrangement() != self.is_winning_arrangement_old()):
-        #    print "different"
-        #    quit()
         return self.is_winning_arrangement() or -1 not in self.in_play
-    
+
+
     def is_winning_arrangement(self):
         '''
         Check if there is a winning arrangement on board.
         '''
         in_play = self.in_play
-        combos = self.get_combinations(in_play)
-        for combo in combos:
-            for attribute in self.ATTRIBUTES:
-                winning = True
-                for c in combo:
-                    if c not in attribute:
-                        winning = False
-                        break
-                if winning:
-                    return True
-        return False
-        
-    def is_winning_arrangement_old(self):
-        '''
-        Check if there is a winning arrangement on board.
-        '''
-        in_play = self.in_play
-        combos = self.get_combinations_old(in_play)
-        for combo in combos:
-            if -1 not in combo:
-                for attribute in self.ATTRIBUTES:
-                    attribute = set(attribute)
-                    combo = set(combo)
-                    if(combo.intersection(attribute) == combo):
-                        return True
-        return False
-        
-    def get_combinations(self,in_play):
-        '''
-        Get all combos of 4 pieces to win with.
-        '''
-        combos = list()
+        winning = False
         for i in range(4):
-            temp = [in_play[4*i],in_play[4*i+1],in_play[4*i+2],in_play[4*i+3]]
-            if -1 not in temp:
-                combos.append(temp)
-            temp = [in_play[i],in_play[i+4],in_play[i+8],in_play[i+12]]
-            if -1 not in temp:
-                combos.append(temp)
-        temp = [in_play[0],in_play[5],in_play[10],in_play[15]]
-        if -1 not in temp:
-            combos.append(temp)
-        temp = [in_play[3],in_play[6],in_play[9],in_play[12]]
-        if -1 not in temp:
-            combos.append(temp)
-        return combos
-        
-    def get_combinations_old(self,in_play):
-        '''
-        Get all combos of 4 pieces to win with.
-        '''
-        combos = list()
-        for i in range(4):
-            combos.append([in_play[4*i],in_play[4*i+1],in_play[4*i+2],in_play[4*i+3]])
-            combos.append([in_play[i],in_play[i+4],in_play[i+8],in_play[i+12]])
-        combos.append([in_play[0],in_play[5],in_play[10],in_play[15]])    
-        combos.append([in_play[3],in_play[6],in_play[9],in_play[12]])
-        return combos       
-           
-    #print check_all_pieces_accounted_for(in_play,next_piece,pieces_available,ALL_PIECES)
-    #Player player_a = Player()
-    #Player player_b = Player()
-
-
+            winning = winning or self.four_match(in_play[4*i],in_play[4*i+1],in_play[4*i+2],in_play[4*i+3])
+            winning = winning or self.four_match(in_play[i],in_play[i+4],in_play[i+8],in_play[i+12])
+        winning = winning or self.four_match(in_play[0],in_play[5],in_play[10],in_play[15])
+        winning = winning or self.four_match(in_play[3],in_play[6],in_play[9],in_play[12])
+        return winning
 
 def check_all_pieces(attributes_one,attributes_two,attributes_all):
     '''

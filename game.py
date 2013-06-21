@@ -4,7 +4,7 @@ from algos import Player,Algo4,Algo3,Algo5,Algo6,Algo7,Algo8,Algo9,Algo10
 from board import Move,Board
 
 def drive():
-    num_games = 50
+    num_games = 5
     
     player_1 = "a"
     player_2 = "b"
@@ -17,8 +17,10 @@ def drive():
 
         player_a = Algo10(player_1)
         player_b = Algo7(player_2)
-        
-        current_player = player_a
+        if j % 2 == 0:
+            current_player = player_a
+        else:
+            current_player = player_b
         i = 0
         while(not board.game_over()):
             #print "Round:",str(i),"  Player:",current_player

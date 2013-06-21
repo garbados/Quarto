@@ -670,3 +670,85 @@ class Algo10(Player):
     def __repr__(self):
         return "Algo10"+str(self.identifier)
 
+class AlgoMiniMax(Player):
+    '''
+    Minimax strategy, with depth specified.
+    '''
+
+    def __init__(self,identifier,depth):
+        self.identifier = identifier
+        self.depth = depth
+
+    def all_next_moves(self,board):
+        '''
+        All moves possible.
+        '''
+        in_play = board.in_play
+        next_piece = board.next_piece
+        pieces_available = board.pieces_available
+        if(next_piece == -1):
+            moves = list()
+            for i in range(len(pieces_available)):
+                moves.append(Move(-1,-1,pieces_available[i]))
+            return moves
+        indices = [i for i, x in enumerate(in_play) if x == -1]
+        moves = list()
+        for index in indices:
+            if len(pieces_available) == 0:
+                pieces_available.append(-1)
+            for i in range(len(pieces_available)):
+                moves.append(Move(index,next_piece,pieces_available[i]))
+        return moves
+
+    def next_move(self,board):
+        
+        indices = [i for i, x in enumerate(board.in_play) if x == -1]
+        num_moves_left = len(indices)
+        how_deep = min(100,max(2,15*(16-int(num_moves_left))))
+        moves = self.all_next_moves(board)
+        saved_move = moves[0]
+        current_probability = -1
+        if len(moves) > how_deep:
+            random.shuffle(moves)
+        i = 0
+        for move in moves:
+            move_type = self.type_of_move(move,board,max(2,min(10,how_deep/15)))
+            if(move_type == "winning_move"):
+                return move
+            if(move_type > current_probability):
+                saved_move = move
+                current_probability = move_type
+            i += 1
+            if i > how_deep:
+                break
+        return saved_move
+
+    def type_of_move(self,move,board,how_deep):
+        original_after_my_move = copy.deepcopy(board)
+        #print "now              ",original_after_my_move
+        original_after_my_move.make_move(move)
+        if(original_after_my_move.is_winning_arrangement()):
+            return "winning_move"
+        #print "one move ahead   ",original_after_my_move
+        other_player = Algo3_with_how_deep("hash",how_deep/2)
+        my_inner_player = Algo3_with_how_deep("hash",how_deep/2)
+        losers = 0
+        winners = 0
+        for i in range(how_deep):
+            test_board = copy.deepcopy(original_after_my_move)
+            other_player_move = other_player.next_move(test_board)
+            test_board.make_move(other_player_move)
+            #print "two moves ahead  ",test_board
+            if(test_board.is_winning_arrangement()):
+                losers += 1
+            my_inner_move = my_inner_player.next_move(test_board)
+            test_board.make_move(my_inner_move)
+            #print "three moves ahead",test_board
+            if(test_board.is_winning_arrangement()):
+                winners += 1      
+        return 1.0 * (winners-losers) / how_deep
+
+
+    def __repr__(self):
+        return "Algo10"+str(self.identifier)
+
