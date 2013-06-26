@@ -1,17 +1,18 @@
 import copy
 import datetime
-from algos import Player,Algo4,Algo3,Algo5,Algo6,Algo7,Algo8,Algo9,Algo10
-from board import Move,Board
+from algos import Player, Algo4, Algo3, Algo5, Algo6, Algo7, Algo8, Algo9, Algo10
+from board import Move, Board
+
 
 def drive():
     num_games = 5
-    
+
     player_1 = "a"
     player_2 = "b"
     player_1_wins = 0
     player_2_wins = 0
     stalemates = 0
-    
+
     for j in range(num_games):
         board = Board()
 
@@ -23,13 +24,13 @@ def drive():
             current_player = player_b
         i = 0
         while(not board.game_over()):
-            #print "Round:",str(i),"  Player:",current_player
+            # print "Round:",str(i),"  Player:",current_player
             board_for_player = copy.deepcopy(board)
             move = current_player.next_move(board_for_player)
-            #print "before_move",board
-            #print move
+            # print "before_move",board
+            # print move
             board.make_move(move)
-            #print "after_move ",board
+            # print "after_move ",board
             if(not board.game_over()):
                 if current_player == player_a:
                     current_player = player_b
@@ -43,14 +44,14 @@ def drive():
                 player_2_wins += 1
         else:
             stalemates += 1
-            
-    print player_a,"_wins:",player_1_wins
-    print player_b,"_wins:",player_2_wins
-    print "stalemates:",stalemates
+
+    print player_a, "_wins:", player_1_wins
+    print player_b, "_wins:", player_2_wins
+    print "stalemates:", stalemates
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     tic = datetime.datetime.now()
     drive()
     toc = datetime.datetime.now()
-    print toc-tic
+    print toc - tic

@@ -3,6 +3,7 @@ import unittest
 from board import Board
 import copy
 
+
 class TestSequenceFunctions(unittest.TestCase):
 
     def setUp(self):
@@ -15,7 +16,7 @@ class TestSequenceFunctions(unittest.TestCase):
         self.assertEqual(self.seq, range(10))
 
         # should raise an exception for an immutable sequence
-        self.assertRaises(TypeError, random.shuffle, (1,2,3))
+        self.assertRaises(TypeError, random.shuffle, (1, 2, 3))
 
     def test_choice(self):
         element = random.choice(self.seq)
@@ -26,33 +27,35 @@ class TestSequenceFunctions(unittest.TestCase):
             random.sample(self.seq, 20)
         for element in random.sample(self.seq, 5):
             self.assertTrue(element in self.seq)
-            
+
     def test_board(self):
         board = Board()
-        ALL_PIECES = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-        ATTRIBUTES = [[0,1,2,3,4,5,6,7],   [8,9,10,11,12,13,14,15],
-                      [0,1,2,3,8,9,10,11], [4,5,6,7,12,13,14,15],
-                      [0,1,4,5,8,9,12,13], [2,3,6,7,10,11,14,15],
-                      [0,2,4,6,8,10,12,14],[1,3,5,7,9,11,13,15]]
-                      
+        ALL_PIECES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+        ATTRIBUTES = [
+            [0, 1, 2, 3, 4, 5, 6, 7],   [8, 9, 10, 11, 12, 13, 14, 15],
+            [0, 1, 2, 3, 8, 9, 10, 11], [4, 5, 6, 7, 12, 13, 14, 15],
+            [0, 1, 4, 5, 8, 9, 12, 13], [2, 3, 6, 7, 10, 11, 14, 15],
+            [0, 2, 4, 6, 8, 10, 12, 14], [1, 3, 5, 7, 9, 11, 13, 15]]
+
         for at in range(len(ATTRIBUTES)):
             att = ATTRIBUTES[at]
             for i in range(10000):
                 all_possible_pieces = copy.deepcopy(att)
                 four_pieces = list()
                 for piece in range(4):
-                    index = random.randrange( len(all_possible_pieces) )
+                    index = random.randrange(len(all_possible_pieces))
                     four_pieces.append(all_possible_pieces.pop(index))
-                self.assertTrue(board.four_match(four_pieces[0],four_pieces[1],four_pieces[2],four_pieces[3]))
-                
-        self.assertFalse(board.four_match(0,1,2,-1))
-        
+                self.assertTrue(board.four_match(four_pieces[
+                                0], four_pieces[1], four_pieces[2], four_pieces[3]))
+
+        self.assertFalse(board.four_match(0, 1, 2, -1))
+
         for att in ATTRIBUTES:
             for i in range(10000):
                 all_possible_pieces = copy.deepcopy(att)
                 four_pieces = list()
                 for piece in range(3):
-                    index = random.randrange( len(all_possible_pieces) )
+                    index = random.randrange(len(all_possible_pieces))
                     four_pieces.append(all_possible_pieces.pop(index))
                 all_possible_pieces = copy.deepcopy(ALL_PIECES)
                 all_ats = list()
@@ -70,13 +73,13 @@ class TestSequenceFunctions(unittest.TestCase):
                             all_possible_pieces.remove(b)
                 print all_possible_pieces
                 print four_pieces
-                index = random.randrange( len(all_possible_pieces) )
+                index = random.randrange(len(all_possible_pieces))
                 four_pieces.append(all_possible_pieces.pop(index))
                 four_pieces = list(set(four_pieces))
                 print four_pieces
-                self.assertFalse(board.four_match(four_pieces[0],four_pieces[1],four_pieces[2],four_pieces[3]))
+                self.assertFalse(board.four_match(four_pieces[
+                                 0], four_pieces[1], four_pieces[2], four_pieces[3]))
 
-        
 
 if __name__ == '__main__':
     unittest.main()
